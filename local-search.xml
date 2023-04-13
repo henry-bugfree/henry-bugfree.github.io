@@ -1,81 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>We are but dust and shadow</title>
+<search>
   
   
-  <link href="https://henry-bugfree.github.io/atom.xml" rel="self"/>
-  
-  <link href="https://henry-bugfree.github.io/"/>
-  <updated>2023-04-13T09:22:54.985Z</updated>
-  <id>https://henry-bugfree.github.io/</id>
-  
-  <author>
-    <name>Hongrui</name>
-    
-  </author>
-  
-  <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
     <title>Link State Algorithm</title>
-    <link href="https://henry-bugfree.github.io/2023/04/13/Link-State-Algorithm/"/>
-    <id>https://henry-bugfree.github.io/2023/04/13/Link-State-Algorithm/</id>
-    <published>2023-04-13T07:45:32.000Z</published>
-    <updated>2023-04-13T09:22:54.985Z</updated>
+    <link href="/2023/04/13/Link-State-Algorithm/"/>
+    <url>/2023/04/13/Link-State-Algorithm/</url>
     
     <content type="html"><![CDATA[<h2 id="链路状态路由选择算法-x2F-link-state-routing-algorithm"><a href="#链路状态路由选择算法-x2F-link-state-routing-algorithm" class="headerlink" title="链路状态路由选择算法&#x2F;link state routing algorithm"></a>链路状态路由选择算法&#x2F;link state routing algorithm</h2><p><img src="/2023/04/13/Link-State-Algorithm/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E6%8A%BD%E8%B1%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE.png" alt="计算机网路抽象模型图"></p><blockquote><p>The esaiest way to understand an algorithm is to take a look at an example!</p></blockquote><p><strong>目标</strong>：找到节点u到其他节点的最短路径<br><strong>符号</strong>：</p><ul><li>C(a,b):节点a到b直接相连的开销，如果a和b不直接相连则为正无穷</li><li>N’:已确定最短路径的节点集</li><li>D(v):直到本次迭代，从源节点到节点v的最低开销</li><li>p(v):直到本次迭代，从源节点到节点v的最短路径上v的前一个节点</li></ul><p><strong>第一步初始化</strong>：把u加入N’节点集中，对与u直接相连的节点:D(v) &#x3D; C(u,v)，不与u直接相连的节点:D(v) &#x3D; inf</p><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">N&#x27; = &#123;u&#125;<br><span class="hljs-keyword">for</span> all nodes v:<br>    <span class="hljs-keyword">if</span> v is adjacent <span class="hljs-keyword">to</span> u<br>        <span class="hljs-keyword">then</span> <span class="hljs-constructor">D(<span class="hljs-params">v</span>)</span> = <span class="hljs-constructor">C(<span class="hljs-params">u</span>,<span class="hljs-params">v</span>)</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-constructor">D(<span class="hljs-params">v</span>)</span> = inf<br></code></pre></td></tr></table></figure><p>此例中的初始化如下：</p><table><thead><tr><th align="center">step</th><th align="center">N’</th><th align="center">D(v),p(v)</th><th align="center">D(w),p(w)</th><th align="center">D(x),p(x)</th><th align="center">D(y),p(y)</th><th align="center">D(z),p(z)</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">u</td><td align="center">2,u</td><td align="center">5,u</td><td align="center">1,u</td><td align="center">inf</td><td align="center">inf</td></tr></tbody></table><p><strong>第二步循环</strong>：找到D()最小且不在N’节点集中的节点w，把它加进N’中，并按照D(v)&#x3D;min(D(v),D(w)+C(w,v))更新所有与w直接相连且不在N’里的节点，直到加入所有节点</p><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Loop<br>    find w not <span class="hljs-keyword">in</span> N&#x27; such that <span class="hljs-constructor">D(<span class="hljs-params">w</span>)</span> is a minimum<br>    add w <span class="hljs-keyword">to</span> N&#x27;<br>    update <span class="hljs-constructor">D(<span class="hljs-params">v</span>)</span> <span class="hljs-keyword">for</span> each neighbor v <span class="hljs-keyword">of</span> w <span class="hljs-keyword">and</span> not <span class="hljs-keyword">in</span> N&#x27;:<br>        <span class="hljs-constructor">D(<span class="hljs-params">v</span>)</span>=min(<span class="hljs-constructor">D(<span class="hljs-params">v</span>)</span>,<span class="hljs-constructor">D(<span class="hljs-params">w</span>)</span>+<span class="hljs-constructor">C(<span class="hljs-params">w</span>,<span class="hljs-params">v</span>)</span>)<br>until N&#x27;=N<br></code></pre></td></tr></table></figure><p>此例中，因为D()最小且不在N’中的节点是x(1&lt;2&lt;5&lt;inf&#x3D;inf)，所以将x加入N’，并更新与x直接相连且不在N’里的节点v,w,y:<br>D(v) &#x3D; min(D(v),D(x)+C(x,v)) &#x3D; min(2,1+2)&#x3D;2;<br>D(w) &#x3D; min(D(w),D(x)+C(x,w)) &#x3D; min(5,1+3)&#x3D;4;<br>D(y) &#x3D; min(D(y),D(x)+C(x,y)) &#x3D; min(inf,1+1)&#x3D;2;</p><table><thead><tr><th align="center">step</th><th align="center">N’</th><th align="center">D(v),p(v)</th><th align="center">D(w),p(w)</th><th align="center">D(x),p(x)</th><th align="center">D(y),p(y)</th><th align="center">D(z),p(z)</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">u</td><td align="center">2,u</td><td align="center">5,u</td><td align="center">1,u</td><td align="center">inf</td><td align="center">inf</td></tr><tr><td align="center">1</td><td align="center">ux</td><td align="center">2,u</td><td align="center">4,x</td><td align="center"></td><td align="center">2,x</td><td align="center">inf</td></tr></tbody></table><p>重复此步骤: 选择y(2&#x3D;2&lt;4&lt;inf)，将y加入N’，并更新与y直接相连且不在N’里的节点w,z:<br>D(w) &#x3D; min(D(w),D(y)+C(y,w)) &#x3D; min(4,2+1)&#x3D;3;<br>D(z) &#x3D; min(D(z),D(y)+C(y,z)) &#x3D; min(inf,2+2)&#x3D;4;</p><table><thead><tr><th align="center">step</th><th align="center">N’</th><th align="center">D(v),p(v)</th><th align="center">D(w),p(w)</th><th align="center">D(x),p(x)</th><th align="center">D(y),p(y)</th><th align="center">D(z),p(z)</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">u</td><td align="center">2,u</td><td align="center">5,u</td><td align="center">1,u</td><td align="center">inf</td><td align="center">inf</td></tr><tr><td align="center">1</td><td align="center">ux</td><td align="center">2,u</td><td align="center">4,x</td><td align="center"></td><td align="center">2,x</td><td align="center">inf</td></tr><tr><td align="center">2</td><td align="center">uxy</td><td align="center">2,u</td><td align="center">3,y</td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr></tbody></table><p>重复此步骤: 选择v(2&lt;3&lt;4)，将v加入N’，并更新与v直接相连且不在N’里的节点w:<br>D(w) &#x3D; min(D(w),D(v)+C(v,w)) &#x3D; min(3,2+3)&#x3D;3;</p><table><thead><tr><th align="center">step</th><th align="center">N’</th><th align="center">D(v),p(v)</th><th align="center">D(w),p(w)</th><th align="center">D(x),p(x)</th><th align="center">D(y),p(y)</th><th align="center">D(z),p(z)</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">u</td><td align="center">2,u</td><td align="center">5,u</td><td align="center">1,u</td><td align="center">inf</td><td align="center">inf</td></tr><tr><td align="center">1</td><td align="center">ux</td><td align="center">2,u</td><td align="center">4,x</td><td align="center"></td><td align="center">2,x</td><td align="center">inf</td></tr><tr><td align="center">2</td><td align="center">uxy</td><td align="center">2,u</td><td align="center">3,y</td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr><tr><td align="center">3</td><td align="center">uxyv</td><td align="center"></td><td align="center">3,y</td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr></tbody></table><p>重复此步骤: 选择w(3&lt;4)，将w加入N’，并更新与w直接相连且不在N’里的节点z:<br>D(z) &#x3D; min(D(z),D(w)+C(w,z)) &#x3D; min(4,3+5)&#x3D;4;</p><table><thead><tr><th align="center">step</th><th align="center">N’</th><th align="center">D(v),p(v)</th><th align="center">D(w),p(w)</th><th align="center">D(x),p(x)</th><th align="center">D(y),p(y)</th><th align="center">D(z),p(z)</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">u</td><td align="center">2,u</td><td align="center">5,u</td><td align="center">1,u</td><td align="center">inf</td><td align="center">inf</td></tr><tr><td align="center">1</td><td align="center">ux</td><td align="center">2,u</td><td align="center">4,x</td><td align="center"></td><td align="center">2,x</td><td align="center">inf</td></tr><tr><td align="center">2</td><td align="center">uxy</td><td align="center">2,u</td><td align="center">3,y</td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr><tr><td align="center">3</td><td align="center">uxyv</td><td align="center"></td><td align="center">3,y</td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr><tr><td align="center">4</td><td align="center">uxyvw</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr></tbody></table><p>重复此步骤: 最后加入节点z</p><table><thead><tr><th align="center">step</th><th align="center">N’</th><th align="center">D(v),p(v)</th><th align="center">D(w),p(w)</th><th align="center">D(x),p(x)</th><th align="center">D(y),p(y)</th><th align="center">D(z),p(z)</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">u</td><td align="center">2,u</td><td align="center">5,u</td><td align="center">1,u</td><td align="center">inf</td><td align="center">inf</td></tr><tr><td align="center">1</td><td align="center">ux</td><td align="center">2,u</td><td align="center">4,x</td><td align="center"></td><td align="center">2,x</td><td align="center">inf</td></tr><tr><td align="center">2</td><td align="center">uxy</td><td align="center">2,u</td><td align="center">3,y</td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr><tr><td align="center">3</td><td align="center">uxyv</td><td align="center"></td><td align="center">3,y</td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr><tr><td align="center">4</td><td align="center">uxyvw</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center">4,y</td></tr><tr><td align="center">5</td><td align="center">uxyvwz</td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td><td align="center"></td></tr></tbody></table><p>至此已经算出了源节点u到所有节点的最短路径</p>]]></content>
     
     
-      
-      
-    <summary type="html">&lt;h2 id=&quot;链路状态路由选择算法-x2F-link-state-routing-algorithm&quot;&gt;&lt;a href=&quot;#链路状态路由选择算法-x2F-link-state-routing-algorithm&quot; class=&quot;headerlink&quot; title=&quot;链路状态路由</summary>
-      
-    
-    
-    
     
   </entry>
   
+  
+  
   <entry>
     <title>Curtain Call</title>
-    <link href="https://henry-bugfree.github.io/2022/05/08/Curtain_Call/"/>
-    <id>https://henry-bugfree.github.io/2022/05/08/Curtain_Call/</id>
-    <published>2022-05-08T15:00:16.000Z</published>
-    <updated>2023-04-07T10:41:18.012Z</updated>
+    <link href="/2022/05/08/Curtain_Call/"/>
+    <url>/2022/05/08/Curtain_Call/</url>
     
     <content type="html"><![CDATA[<p>I miss the high school<br>I miss the LAWSON store<br>I miss going home after soirée<br>I miss lying on the lawn</p><p>sometimes life is beautiful<br>but every show has its curtain call<br>I am so serious, anxious<br>I am wandering, and lost</p>]]></content>
     
     
-      
-      
-    <summary type="html">&lt;p&gt;I miss the high school&lt;br&gt;I miss the LAWSON store&lt;br&gt;I miss going home after soirée&lt;br&gt;I miss lying on the lawn&lt;/p&gt;
-&lt;p&gt;sometimes life is </summary>
-      
-    
-    
-    
     
   </entry>
   
+  
+  
   <entry>
     <title>May</title>
-    <link href="https://henry-bugfree.github.io/2022/05/06/May/"/>
-    <id>https://henry-bugfree.github.io/2022/05/06/May/</id>
-    <published>2022-05-06T03:48:52.000Z</published>
-    <updated>2023-04-05T10:01:17.555Z</updated>
+    <link href="/2022/05/06/May/"/>
+    <url>/2022/05/06/May/</url>
     
     <content type="html"><![CDATA[<p>when the weather comes to may<br>hot sun but locked in the gate</p><p>things during quarantine make me sleepy<br>missing you makes me far too weary </p><p>thunder and pouring rain come out of the blue<br>which always remind me of the dreams in high school</p><p>I don’t drink water but milk and beer<br>I still care about my outfit and hair</p>]]></content>
     
     
-      
-      
-    <summary type="html">&lt;p&gt;when the weather comes to may&lt;br&gt;hot sun but locked in the gate&lt;/p&gt;
-&lt;p&gt;things during quarantine make me sleepy&lt;br&gt;missing you makes me fa</summary>
-      
-    
-    
-    
     
   </entry>
   
-</feed>
+  
+  
+  
+</search>
