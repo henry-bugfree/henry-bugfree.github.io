@@ -6,7 +6,7 @@
   <link href="https://henry-bugfree.github.io/atom.xml" rel="self"/>
   
   <link href="https://henry-bugfree.github.io/"/>
-  <updated>2023-04-05T10:01:17.555Z</updated>
+  <updated>2023-04-13T07:53:39.280Z</updated>
   <id>https://henry-bugfree.github.io/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>curtain call</title>
-    <link href="https://henry-bugfree.github.io/2022/05/08/curtain-call/"/>
-    <id>https://henry-bugfree.github.io/2022/05/08/curtain-call/</id>
+    <title>Link_State_Algorithm</title>
+    <link href="https://henry-bugfree.github.io/2023/04/13/Link-State-Algorithm/"/>
+    <id>https://henry-bugfree.github.io/2023/04/13/Link-State-Algorithm/</id>
+    <published>2023-04-13T07:45:32.000Z</published>
+    <updated>2023-04-13T07:53:39.280Z</updated>
+    
+    <content type="html"><![CDATA[<p>##链路状态路由选择算法&#x2F;link state routing algorithm<br>The esaiest way to understand an algorithm is to take a look at an example</p><p><img src="/2023/04/13/Link-State-Algorithm/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E8%B7%AF%E6%8A%BD%E8%B1%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE.png" alt="计算机网路抽象模型图"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;##链路状态路由选择算法&amp;#x2F;link state routing algorithm&lt;br&gt;The esaiest way to understand an algorithm is to take a look at an example&lt;/p&gt;
+&lt;p&gt;&lt;img </summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Curtain Call</title>
+    <link href="https://henry-bugfree.github.io/2022/05/08/Curtain_Call/"/>
+    <id>https://henry-bugfree.github.io/2022/05/08/Curtain_Call/</id>
     <published>2022-05-08T15:00:16.000Z</published>
-    <updated>2023-04-05T10:01:17.555Z</updated>
+    <updated>2023-04-07T10:41:18.012Z</updated>
     
     <content type="html"><![CDATA[<p>I miss the high school<br>I miss the LAWSON store<br>I miss going home after soirée<br>I miss lying on the lawn</p><p>sometimes life is beautiful<br>but every show has its curtain call<br>I am so serious, anxious<br>I am wandering, and lost</p>]]></content>
     
